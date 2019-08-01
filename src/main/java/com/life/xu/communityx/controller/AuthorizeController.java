@@ -59,6 +59,7 @@ public class AuthorizeController {
             user.setName(githubUser.getLogin());
             user.setToken(UUID.randomUUID().toString());
             user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtCreate());
             userService.createOrUpdate(user);
             //登录成功，写cookie 和session
             session.setAttribute("user",githubUser);
