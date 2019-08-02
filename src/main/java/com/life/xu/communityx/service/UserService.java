@@ -11,4 +11,6 @@ import com.life.xu.communityx.model.User;
 public interface UserService {
 
     void createOrUpdate(User user);
+
+    User findByToken(String token);
 }

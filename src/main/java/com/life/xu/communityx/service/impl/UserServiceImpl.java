@@ -22,4 +22,9 @@ public class UserServiceImpl implements UserService {
     public void createOrUpdate(User user) {
         userDao.insert(user);
     }
+
+    @Override
+    public User findByToken(String token) {
+        return userDao.findByToken(token);
+    }
 }

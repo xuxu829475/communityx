@@ -2,7 +2,7 @@ spring:
   datasource:
     #   数据源基本配置
     username: root
-    password: 123456
+    password: 111111
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/community?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     type: com.alibaba.druid.pool.DruidDataSource
@@ -23,14 +23,19 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
-#mybatis:
-#  # 指定全局配置文件位置
-#  config-location: classpath:mybatis/mybatis-config.xml
-#  # 指定sql映射文件位置
-#  mapper-locations: classpath:mybatis/mapper/*.xml
+mybatis:
+  # 指定全局配置文件位置
+  config-location: classpath:mybatis/mybatis-config.xml
+  # 指定sql映射文件位置
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  #指定bean所在包
+  #在mapper.xml中可以使用别名而不使用类的全路径名
+  type-aliases-package: com.life.xu.communityx.model
 
   #    schema:
   #      - classpath:sql/department.sql
   #      - classpath:sql/employee.sql
-
-
+#显示sql
+logging:
+  level:
+    com.life.xu.communityx.dao: debug

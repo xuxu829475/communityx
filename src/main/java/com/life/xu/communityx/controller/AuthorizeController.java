@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -62,7 +63,8 @@ public class AuthorizeController {
             user.setGmtModified(user.getGmtCreate());
             userService.createOrUpdate(user);
             //登录成功，写cookie 和session
-            session.setAttribute("user",githubUser);
+            response.addCookie(new Cookie("token",user.getToken()));
+            session.setAttribute("user",user);
         }else {
             //登录失败，重新登录
         }
