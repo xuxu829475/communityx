@@ -1,0 +1,17 @@
+body{
+    margin: 0;
+    height: 100%;
+    font-size: 14px;
+    line-height: 160%;
+    color: #666;
+    background: url(../images/bg.jpg) repeat;
+}
+.publish_div{
+    width: 70%;
+    margin: 0 auto;
+    background: white;
+}
+.btn-publish{
+    float: right;
+    margin-bottom: 15px;
+}
