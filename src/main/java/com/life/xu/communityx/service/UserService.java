@@ -13,4 +13,6 @@ public interface UserService {
     void createOrUpdate(User user);
 
     User findByToken(String token);
+
+    User findById(Long id);
 }

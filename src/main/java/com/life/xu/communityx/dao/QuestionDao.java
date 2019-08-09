@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * @program: communityx
  * @description: 问题DAO
@@ -21,4 +23,7 @@ public interface QuestionDao {
 
     @Select("select * from question where id = #{id}")
     Question findById(@Param("id") Long id);
+
+    @Select("select * from question")
+    List<Question> findAll();
 }

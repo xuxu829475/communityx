@@ -1,6 +1,10 @@
 package com.life.xu.communityx.service;
 
+import com.life.xu.communityx.dao.QuestionDao;
 import com.life.xu.communityx.model.Question;
+import com.life.xu.communityx.vo.QuestionVO;
+
+import java.util.List;
 
 /**
  * @program: communityx
@@ -10,4 +14,6 @@ import com.life.xu.communityx.model.Question;
  **/
 public interface QuestionService {
     void createOrUpdate(Question question);
+
+    List<QuestionVO> list();
 }

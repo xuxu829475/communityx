@@ -57,10 +57,11 @@ public class AuthorizeController {
         if (githubUser != null) {
             User user = new User();
             user.setAccountId(githubUser.getId().toString());
-            user.setName(githubUser.getLogin());
+            user.setName(githubUser.getName());
             user.setToken(UUID.randomUUID().toString());
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            user.setAvatarUrl(githubUser.getAvatarUrl());
             userService.createOrUpdate(user);
             //登录成功，写cookie 和session
             response.addCookie(new Cookie("token",user.getToken()));

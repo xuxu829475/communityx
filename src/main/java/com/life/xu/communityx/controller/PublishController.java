@@ -23,7 +23,7 @@ import java.util.StringTokenizer;
  * @create: 2019-08-02 14:44
  **/
 @Controller
-public class publishController {
+public class PublishController {
 
     @Autowired
     UserService userService;
@@ -42,7 +42,6 @@ public class publishController {
             @RequestParam(value = "tag", required = false) String tag,
             @RequestParam(value = "id", required = false) Long id,
             @CookieValue(value = "token",required = false) String token,
-            HttpServletRequest request,
             Model model) {
         model.addAttribute("title", title);
         model.addAttribute("description", description);
@@ -60,7 +59,6 @@ public class publishController {
             model.addAttribute("error", "标签不能为空");
             return "publish";
         }
-
         if (StringUtils.isEmpty(token)) {
             model.addAttribute("error", "用户未登录");
             return "publish";

@@ -27,4 +27,9 @@ public class UserServiceImpl implements UserService {
     public User findByToken(String token) {
         return userDao.findByToken(token);
     }
+
+    @Override
+    public User findById(Long id) {
+        return userDao.findById(id);
+    }
 }
