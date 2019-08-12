@@ -5,13 +5,11 @@ import com.life.xu.communityx.model.Question;
 import com.life.xu.communityx.model.User;
 import com.life.xu.communityx.service.QuestionService;
 import com.life.xu.communityx.service.UserService;
+import com.life.xu.communityx.vo.QuestionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.StringTokenizer;
@@ -35,27 +33,20 @@ public class PublishController {
         return "publish";
     }
 
-    @PostMapping("/publish")
-    public String doPublish(
-            @RequestParam(value = "title", required = false) String title,
-            @RequestParam(value = "description", required = false) String description,
-            @RequestParam(value = "tag", required = false) String tag,
-            @RequestParam(value = "id", required = false) Long id,
+    @PostMapping(value = "/publish")
+    public String doPublish( QuestionVO questionVO,
             @CookieValue(value = "token",required = false) String token,
             Model model) {
-        model.addAttribute("title", title);
-        model.addAttribute("description", description);
-        model.addAttribute("tag", tag);
 
-        if (title == null || title == "") {
+        if (StringUtils.isEmpty(questionVO.getTitle())) {
             model.addAttribute("error", "标题不能为空");
             return "publish";
         }
-        if (description == null || description == "") {
+        if (StringUtils.isEmpty(questionVO.getDescription())) {
             model.addAttribute("error", "问题补充不能为空");
             return "publish";
         }
-        if (tag == null || tag == "") {
+        if (StringUtils.isEmpty(questionVO.getTag())) {
             model.addAttribute("error", "标签不能为空");
             return "publish";
         }
@@ -64,14 +55,8 @@ public class PublishController {
             return "publish";
         }
         User user = userService.findByToken(token);
-
-        Question question = new Question();
-        question.setTitle(title);
-        question.setDescription(description);
-        question.setTag(tag);
-        question.setCreator(user.getId());
-        question.setId(id);
-        questionService.createOrUpdate(question);
+        questionVO.setCreator(user.getId());
+        questionService.createOrUpdate(questionVO);
         return "redirect:/";
     }
 }

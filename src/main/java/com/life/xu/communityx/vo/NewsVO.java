@@ -20,4 +20,5 @@ public class NewsVO {
     private String zhaiyao;
     private Long click;
     private String img_url;
+    private String content;
 }

@@ -26,4 +26,10 @@ public interface QuestionDao {
 
     @Select("select * from question")
     List<Question> findAll();
+
+    @Select("select * from question limit #{offPage},#{pageSize}")
+    List<Question> findPage(@Param("offPage") Integer offPage, @Param("pageSize") Integer pageSize);
+
+    @Select("select count(1) from question")
+    Integer findCount();
 }

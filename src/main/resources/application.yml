@@ -31,8 +31,8 @@ mybatis:
   #指定bean所在包
   #在mapper.xml中可以使用别名而不使用类的全路径名
   type-aliases-package: com.life.xu.communityx.model
-  configuration:
-    map-underscore-to-camel-case: true
+#  configuration:
+#    map-underscore-to-camel-case: true
   #    schema:
   #      - classpath:sql/department.sql
   #      - classpath:sql/employee.sql
