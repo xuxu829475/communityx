@@ -45,7 +45,6 @@ public class IndexController {
                 session.setAttribute("user", user);
             }
         }
-        //List<QuestionVO> questionList = questionService.list();
         PaginationVO<QuestionVO> questionList = questionService.page(page,pageSize);
         model.addAttribute("questionList", questionList);
         return "index";
