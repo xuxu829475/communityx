@@ -60,4 +60,19 @@ public class VueController {
 
         return ResultVOUtil.success(newsVO);
     }
+
+    @GetMapping("/getNavigations")
+    public ResultVO getNavigations(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        List<Map<String, Object>> mapList = new ArrayList<>();
+        Map<String, Object> newsVO;
+        for (int a = 0; a < 20; a++) {
+            newsVO = new HashMap<>(16);
+            newsVO.put("id",a);
+            newsVO.put("title",a+":基本部分");
+            mapList.add(newsVO);
+        }
+
+        return ResultVOUtil.success(mapList);
+    }
 }

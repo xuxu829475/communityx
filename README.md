@@ -51,15 +51,32 @@ http://localhost:8887
 
 ## 脚本
 ```sql
-CREATE TABLE USER
-(
-    ID int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    ACCOUNT_ID VARCHAR(100),
-    NAME VARCHAR(50),
-    TOKEN VARCHAR(36),
-    GMT_CREATE BIGINT,
-    GMT_MODIFIED BIGINT
-);
+CREATE TABLE `user` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ACCOUNT_ID` varchar(100) DEFAULT NULL,
+  `NAME` varchar(50) DEFAULT NULL,
+  `TOKEN` varchar(36) DEFAULT NULL,
+  `GMT_CREATE` bigint(20) DEFAULT NULL,
+  `GMT_MODIFIED` bigint(20) DEFAULT NULL,
+  `avatar_url` varchar(100) DEFAULT NULL COMMENT '头像',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+```
+```sql
+CREATE TABLE `question` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) DEFAULT NULL COMMENT '标题',
+  `description` text COMMENT '问题详情',
+  `gmt_create` bigint(20) DEFAULT NULL,
+  `gmt_modified` int(11) DEFAULT NULL,
+  `creator` bigint(20) DEFAULT NULL COMMENT '发起人',
+  `comment_count` int(11) DEFAULT '0' COMMENT '评论数',
+  `view_count` int(11) DEFAULT '0' COMMENT '阅读数',
+  `like_count` int(11) DEFAULT '0' COMMENT '点赞数',
+  `tag` varchar(256) DEFAULT NULL COMMENT '标签',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 ```
 ```bash
 mvn flyway:migrate
