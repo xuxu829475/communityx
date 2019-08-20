@@ -4,6 +4,7 @@ import com.life.xu.communityx.vo.PaginationVO;
 import com.life.xu.communityx.vo.QuestionVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: communityx
@@ -16,5 +17,5 @@ public interface QuestionService {
 
     List<QuestionVO> list();
 
-    PaginationVO<QuestionVO> page(Integer page, Integer pageSize);
+    PaginationVO<QuestionVO> page(Map<String,Object> parMap, Integer page, Integer pageSize);
 }

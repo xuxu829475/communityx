@@ -38,7 +38,7 @@ public class PublishController {
             @CookieValue(value = "token",required = false) String token,
             Model model) {
 
-        if (StringUtils.isEmpty(questionVO.getTitle())) {
+        if (StringUtils.isEmpty(questionVO.getTitle().trim())) {
             model.addAttribute("error", "标题不能为空");
             return "publish";
         }

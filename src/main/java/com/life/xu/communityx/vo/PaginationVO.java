@@ -23,6 +23,13 @@ public class PaginationVO<T> {
     private Integer totalPage;
 
     public void setPagination(Integer totalPage, Integer page) {
+        if(totalPage == 0){
+            totalPage = 1;
+        }
+        if(page > totalPage && page != 1){
+            page = totalPage;
+        }
+
         this.totalPage = totalPage;
         this.page = page;
 
@@ -44,7 +51,8 @@ public class PaginationVO<T> {
         }
 
         // 是否展示下一页
-        if (page == totalPage) {
+
+        if (page.equals(totalPage) || totalPage == 0) {
             showNext = false;
         } else {
             showNext = true;
@@ -58,7 +66,7 @@ public class PaginationVO<T> {
         }
 
         // 是否展示最后一页
-        if (pages.contains(totalPage)) {
+        if (pages.contains(totalPage) || totalPage == 0) {
             showEndPage = false;
         } else {
             showEndPage = true;

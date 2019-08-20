@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: communityx
@@ -27,9 +28,7 @@ public interface QuestionDao {
     @Select("select * from question")
     List<Question> findAll();
 
-    @Select("select * from question limit #{offPage},#{pageSize}")
-    List<Question> findPage(@Param("offPage") Integer offPage, @Param("pageSize") Integer pageSize);
+    List<Question> findPage(@Param("parMap")Map<String,Object> parMap,@Param("offPage") Integer offPage, @Param("pageSize") Integer pageSize);
 
-    @Select("select count(1) from question")
-    Integer findCount();
+    Integer findCount(Map<String,Object> parMap);
 }

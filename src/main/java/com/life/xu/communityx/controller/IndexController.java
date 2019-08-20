@@ -18,7 +18,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: communityx
@@ -45,7 +47,8 @@ public class IndexController {
                 session.setAttribute("user", user);
             }
         }
-        PaginationVO<QuestionVO> questionList = questionService.page(page,pageSize);
+        Map<String,Object> parMap = new HashMap<>(16);
+        PaginationVO<QuestionVO> questionList = questionService.page(parMap,page,pageSize);
         model.addAttribute("questionList", questionList);
         return "index";
     }

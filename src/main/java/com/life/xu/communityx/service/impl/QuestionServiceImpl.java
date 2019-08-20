@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: communityx
@@ -43,16 +44,16 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public PaginationVO<QuestionVO> page(Integer page, Integer pageSize) {
+    public PaginationVO<QuestionVO> page(Map<String,Object> parMap, Integer page, Integer pageSize) {
         Integer offPage = pageSize * (page - 1);
-        Integer totalCount = questionDao.findCount();
+        Integer totalCount = questionDao.findCount(parMap);
         Integer totalPage;
         if(totalCount % pageSize == 0){
             totalPage = totalCount / pageSize;
         }else{
             totalPage = totalCount / pageSize + 1;
         }
-        List<Question> questions = questionDao.findPage(offPage,pageSize);
+        List<Question> questions = questionDao.findPage(parMap,offPage,pageSize);
         PaginationVO<QuestionVO> paginationVO = new PaginationVO<>();
         List<QuestionVO> questionVOList = question2QuestionVoConverter(questions);
         paginationVO.setData(questionVOList);

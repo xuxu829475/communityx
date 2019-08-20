@@ -5,6 +5,7 @@ import com.life.xu.communityx.vo.NewsVO;
 import com.life.xu.communityx.vo.ResultVO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -49,8 +50,25 @@ public class VueController {
         }
         return ResultVOUtil.success(mapList);
     }
-    @GetMapping("/getNews/{id}")
-    public ResultVO getNews(HttpServletResponse response, @PathVariable Long id) {
+
+    @GetMapping("/getTwfx/{id}")
+    public ResultVO getTwfx(HttpServletResponse response, @PathVariable(required = false) Long id) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        List<NewsVO> mapList = new ArrayList<>();
+        NewsVO newsVO;
+        int i = 10;
+        for (int a = 0; a < i; a++) {
+            newsVO = new NewsVO();
+            newsVO.setId((long) a).setTitle("测试标题：" + a)
+                    .setClick((long) (a + 1)).setZhaiyao("摘要：" + a)
+                    .setImg_url("https://b2.bmp.ovh/imgs/2019/08/dc140b34618dd330.jpg").setAdd_time(new Date());
+            newsVO.setContent(a + "====>给他个合同一句安慰隔热管合同有好感仍然同");
+            mapList.add(newsVO);
+        }
+        return ResultVOUtil.success(mapList);
+    }
+    @GetMapping("/getNew/{id}")
+    public ResultVO getNew(HttpServletResponse response, @PathVariable Long id) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         NewsVO newsVO = new NewsVO();
             newsVO.setId(id).setTitle("测试标题：" + id)
