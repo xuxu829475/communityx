@@ -14,5 +14,7 @@ public interface UserService {
 
     User findByToken(String token);
 
+    public User findByAccountId(String token);
+
     User findById(Long id);
 }

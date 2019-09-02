@@ -5,6 +5,7 @@ import com.life.xu.communityx.model.User;
 import com.life.xu.communityx.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.text.normalizer.UnicodeSet;
 
 /**
  * @program: communityx
@@ -20,12 +21,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createOrUpdate(User user) {
-        userDao.insert(user);
+        String accountId = user.getAccountId();
+        User dbUser = findByAccountId(accountId);
+
+        if(dbUser != null){
+            dbUser.setGmtModified(user.getGmtCreate());
+            dbUser.setAvatarUrl(user.getAvatarUrl());
+            dbUser.setName(user.getName());
+            dbUser.setToken(user.getToken());
+            userDao.updateUser(dbUser);
+        }else {
+            user.setGmtModified(user.getGmtCreate());
+            user.setGmtCreate(System.currentTimeMillis());
+            userDao.insert(user);
+        }
     }
 
     @Override
     public User findByToken(String token) {
         return userDao.findByToken(token);
+    }
+    @Override
+    public User findByAccountId(String token) {
+        return userDao.findByAccountId(token);
     }
 
     @Override

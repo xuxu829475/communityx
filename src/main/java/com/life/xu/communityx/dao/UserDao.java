@@ -1,10 +1,7 @@
 package com.life.xu.communityx.dao;
 
 import com.life.xu.communityx.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 /**
  * @program: communityx
@@ -23,4 +20,10 @@ public interface UserDao {
 
     @Select("select * from user where id = #{id}")
     User findById(Long id);
+
+    @Select("select * from user where account_id = #{accountId}")
+    User findByAccountId(@Param("accountId") String accountId);
+
+    @Update("updata user set name=#{name},token=#{token},gmt_create=#{gmtCreate},gmt_modified=#{gmtModified},avatar_url=#{avatarUrl} where id=#{id}")
+    void updateUser(User user);
 }
