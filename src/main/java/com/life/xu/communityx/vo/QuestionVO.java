@@ -22,8 +22,8 @@ public class QuestionVO {
     private Long creator;
     private Long gmtCreate;
     private Long gmtModified;
-    private Integer commentCount=0;
-    private Integer viewCount=0;
-    private Integer likeCount=0;
+    private Integer commentCount;
+    private Integer viewCount;
+    private Integer likeCount;
     private User user;
 }

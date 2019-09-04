@@ -1,5 +1,6 @@
 package com.life.xu.communityx.service.impl;
 
+import com.life.xu.communityx.Converter.QuestionConverter;
 import com.life.xu.communityx.dao.QuestionDao;
 import com.life.xu.communityx.model.Question;
 import com.life.xu.communityx.model.User;
@@ -28,20 +29,31 @@ public class QuestionServiceImpl implements QuestionService {
     QuestionDao questionDao;
     @Autowired
     UserService userService;
+    @Autowired
+    QuestionConverter questionConverter;
 
     @Override
     public void createOrUpdate(QuestionVO questionVO) {
         Question question = new Question();
         BeanUtils.copyProperties(questionVO,question);
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(System.currentTimeMillis());
-        questionDao.insert(question);
+        if(question.getId() == null){
+            question.setCommentCount(0);
+            question.setLikeCount(0);
+            question.setViewCount(0);
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(System.currentTimeMillis());
+            questionDao.insert(question);
+        }else {
+            question.setGmtModified(System.currentTimeMillis());
+            questionDao.update(question);
+        }
+
     }
 
     @Override
     public List<QuestionVO> list() {
         List<Question> questions = questionDao.findAll();
-        List<QuestionVO> questionVOList = question2QuestionVoConverter(questions);
+        List<QuestionVO> questionVOList = questionConverter.question2QuestionVoConverter(questions);
         return questionVOList;
     }
 
@@ -57,22 +69,17 @@ public class QuestionServiceImpl implements QuestionService {
         }
         List<Question> questions = questionDao.findPage(parMap,offPage,pageSize);
         PaginationVO<QuestionVO> paginationVO = new PaginationVO<>();
-        List<QuestionVO> questionVOList = question2QuestionVoConverter(questions);
+        List<QuestionVO> questionVOList = questionConverter.question2QuestionVoConverter(questions);
         paginationVO.setData(questionVOList);
         paginationVO.setPagination(totalPage,page);
         return paginationVO;
     }
 
-    private List<QuestionVO> question2QuestionVoConverter(List<Question> questions) {
-        List<QuestionVO> questionVOList = new ArrayList<>();
-        QuestionVO questionVO;
-        for (Question question : questions) {
-            User user = userService.findById(question.getCreator());
-            questionVO = new QuestionVO();
-            BeanUtils.copyProperties(question, questionVO);
-            questionVO.setUser(user);
-            questionVOList.add(questionVO);
-        }
-        return questionVOList;
+    @Override
+    public QuestionVO findById(Long id) {
+        Question question = questionDao.findById(id);
+        return questionConverter.question2QuestionVoConverter(question);
     }
+
+
 }

@@ -2,10 +2,7 @@ package com.life.xu.communityx.dao;
 
 import com.life.xu.communityx.model.Question;
 import com.life.xu.communityx.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +25,10 @@ public interface QuestionDao {
     @Select("select * from question")
     List<Question> findAll();
 
-    List<Question> findPage(@Param("parMap")Map<String,Object> parMap,@Param("offPage") Integer offPage, @Param("pageSize") Integer pageSize);
+    List<Question> findPage(@Param("parMap") Map<String, Object> parMap, @Param("offPage") Integer offPage, @Param("pageSize") Integer pageSize);
 
-    Integer findCount(Map<String,Object> parMap);
+    Integer findCount(Map<String, Object> parMap);
+
+    @Update("update question set title=#{title},description=#{description},gmt_create=#{gmtCreate},gmt_modified=#{gmtModified},creator=#{creator},comment_count=#{commentCount},view_count=#{viewCount},like_count=#{likeCount},tag=#{tag} where id = #{id}")
+    void update(Question question);
 }
