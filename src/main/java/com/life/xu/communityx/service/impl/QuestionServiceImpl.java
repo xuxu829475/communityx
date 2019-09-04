@@ -33,6 +33,8 @@ public class QuestionServiceImpl implements QuestionService {
     public void createOrUpdate(QuestionVO questionVO) {
         Question question = new Question();
         BeanUtils.copyProperties(questionVO,question);
+        question.setGmtCreate(System.currentTimeMillis());
+        question.setGmtModified(System.currentTimeMillis());
         questionDao.insert(question);
     }
 

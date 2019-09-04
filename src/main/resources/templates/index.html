@@ -28,7 +28,7 @@
                 <div class="media-body">
                     <h4 class="media-heading" th:text="${question.title}">测试spring Boot 入门</h4>
                     [[${question.description}]]<br/>
-                    <span class="text-desc">[[${question.commentCount}]] 个回复 · [[${question.viewCount}]] 次浏览 · 1小时前</span>
+                    <span class="text-desc">[[${question.commentCount}]] 个回复 · [[${question.viewCount}]] 次浏览 · [[${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}]]</span>
                 </div>
             </div>
             <nav aria-label="Page navigation">

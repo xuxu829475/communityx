@@ -25,13 +25,13 @@ public class UserServiceImpl implements UserService {
         User dbUser = findByAccountId(accountId);
 
         if(dbUser != null){
-            dbUser.setGmtModified(user.getGmtCreate());
+            dbUser.setGmtModified(System.currentTimeMillis());
             dbUser.setAvatarUrl(user.getAvatarUrl());
             dbUser.setName(user.getName());
             dbUser.setToken(user.getToken());
             userDao.updateUser(dbUser);
         }else {
-            user.setGmtModified(user.getGmtCreate());
+            user.setGmtModified(System.currentTimeMillis());
             user.setGmtCreate(System.currentTimeMillis());
             userDao.insert(user);
         }
