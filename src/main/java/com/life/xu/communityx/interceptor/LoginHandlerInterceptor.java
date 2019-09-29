@@ -36,9 +36,10 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         }
         if(user == null){
             //跳转列表页
-            request.getRequestDispatcher("/").forward(request,response);
+            response.sendRedirect("/");
             return false;
         }else {
+            request.getSession().setAttribute("user",user);
             return true;
         }
     }

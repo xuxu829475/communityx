@@ -28,15 +28,20 @@ public class PublishController {
     @Autowired
     QuestionService questionService;
 
-    @RequestMapping("/publish")
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable("id") Long id,Model model){
+        QuestionVO questionVO = questionService.findById(id);
+        model.addAttribute("question", questionVO);
+        return "publish";
+    }
+
+    @GetMapping("/publish")
     public String publish(){
         return "publish";
     }
 
     @PostMapping(value = "/publish")
-    public String doPublish( QuestionVO questionVO,
-            @CookieValue(value = "token",required = false) String token,
-            Model model) {
+    public String doPublish( QuestionVO questionVO,Model model) {
 
         if (StringUtils.isEmpty(questionVO.getTitle().trim())) {
             model.addAttribute("error", "标题不能为空");
@@ -50,12 +55,6 @@ public class PublishController {
             model.addAttribute("error", "标签不能为空");
             return "publish";
         }
-        if (StringUtils.isEmpty(token)) {
-            model.addAttribute("error", "用户未登录");
-            return "publish";
-        }
-        User user = userService.findByToken(token);
-        questionVO.setCreator(user.getId());
         questionService.createOrUpdate(questionVO);
         return "redirect:/";
     }

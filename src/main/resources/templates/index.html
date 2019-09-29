@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>码农社区</title>
     <meta http-equiv="Content-Type" content="text/html; chartset=UTF-8"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="css/community.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/community.css"/>
     <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 
 </head>
 <body>
@@ -26,7 +26,9 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}">测试spring Boot 入门</h4>
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
+                    </h4>
                     [[${question.description}]]<br/>
                     <span class="text-desc">[[${question.commentCount}]] 个回复 · [[${question.viewCount}]] 次浏览 · [[${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}]]</span>
                 </div>
