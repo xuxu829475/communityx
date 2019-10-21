@@ -1,8 +1,11 @@
 package com.life.xu.communityx.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.life.xu.communityx.Converter.QuestionConverter;
 import com.life.xu.communityx.dao.QuestionDao;
 import com.life.xu.communityx.model.Question;
+import com.life.xu.communityx.model.QuestionQuery;
 import com.life.xu.communityx.model.User;
 import com.life.xu.communityx.service.QuestionService;
 import com.life.xu.communityx.service.UserService;
@@ -42,42 +45,36 @@ public class QuestionServiceImpl implements QuestionService {
             question.setViewCount(0);
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(System.currentTimeMillis());
-            questionDao.insert(question);
+            questionDao.insertSelective(question);
         }else {
             question.setGmtModified(System.currentTimeMillis());
-            questionDao.update(question);
+            questionDao.updateByPrimaryKeyWithBLOBs(question);
         }
 
     }
 
     @Override
     public List<QuestionVO> list() {
-        List<Question> questions = questionDao.findAll();
+        QuestionQuery questionQuery = new QuestionQuery();
+        List<Question> questions = questionDao.selectByExampleWithBLOBs(questionQuery);
         List<QuestionVO> questionVOList = questionConverter.question2QuestionVoConverter(questions);
         return questionVOList;
     }
 
     @Override
-    public PaginationVO<QuestionVO> page(Map<String,Object> parMap, Integer page, Integer pageSize) {
-        Integer offPage = pageSize * (page - 1);
-        Integer totalCount = questionDao.findCount(parMap);
-        Integer totalPage;
-        if(totalCount % pageSize == 0){
-            totalPage = totalCount / pageSize;
-        }else{
-            totalPage = totalCount / pageSize + 1;
-        }
-        List<Question> questions = questionDao.findPage(parMap,offPage,pageSize);
+    public PaginationVO<QuestionVO> page(QuestionQuery questionQuery, Integer page, Integer pageSize) {
+        Page<Question> pageList = PageHelper.startPage(page, pageSize);
+        questionDao.selectByExampleWithBLOBs(questionQuery);
         PaginationVO<QuestionVO> paginationVO = new PaginationVO<>();
-        List<QuestionVO> questionVOList = questionConverter.question2QuestionVoConverter(questions);
+        List<QuestionVO> questionVOList = questionConverter.question2QuestionVoConverter(pageList.getResult());
         paginationVO.setData(questionVOList);
-        paginationVO.setPagination(totalPage,page);
+        paginationVO.setPagination((int) pageList.getTotal(),page);
         return paginationVO;
     }
 
     @Override
     public QuestionVO findById(Long id) {
-        Question question = questionDao.findById(id);
+        Question question = questionDao.selectByPrimaryKey(id);
         return questionConverter.question2QuestionVoConverter(question);
     }
 

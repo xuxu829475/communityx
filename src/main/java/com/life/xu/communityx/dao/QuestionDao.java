@@ -1,34 +1,37 @@
 package com.life.xu.communityx.dao;
 
 import com.life.xu.communityx.model.Question;
-import com.life.xu.communityx.model.User;
-import org.apache.ibatis.annotations.*;
+import com.life.xu.communityx.model.QuestionQuery;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
-/**
- * @program: communityx
- * @description: 问题DAO
- * @author: Mr.Xu
- * @create: 2019-08-07 17:22
- **/
-@Mapper
 public interface QuestionDao {
+    int countByExample(QuestionQuery example);
 
-    @Insert("insert into question (title,description,gmt_create,gmt_modified,creator,comment_count,view_count,like_count,tag) values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{commentCount},#{viewCount},#{likeCount},#{tag})")
-    int insert(Question question);
+    int deleteByExample(QuestionQuery example);
 
-    @Select("select * from question where id = #{id}")
-    Question findById(@Param("id") Long id);
+    int deleteByPrimaryKey(Long id);
 
-    @Select("select * from question")
-    List<Question> findAll();
+    int insert(Question record);
 
-    List<Question> findPage(@Param("parMap") Map<String, Object> parMap, @Param("offPage") Integer offPage, @Param("pageSize") Integer pageSize);
+    int insertSelective(Question record);
 
-    Integer findCount(Map<String, Object> parMap);
+    List<Question> selectByExampleWithBLOBs(QuestionQuery example);
 
-    @Update("update question set title=#{title},description=#{description},gmt_create=#{gmtCreate},gmt_modified=#{gmtModified},creator=#{creator},comment_count=#{commentCount},view_count=#{viewCount},like_count=#{likeCount},tag=#{tag} where id = #{id}")
-    void update(Question question);
+    List<Question> selectByExample(QuestionQuery example);
+
+    Question selectByPrimaryKey(Long id);
+
+    int updateByExampleSelective(@Param("record") Question record, @Param("example") QuestionQuery example);
+
+    int updateByExampleWithBLOBs(@Param("record") Question record, @Param("example") QuestionQuery example);
+
+    int updateByExample(@Param("record") Question record, @Param("example") QuestionQuery example);
+
+    int updateByPrimaryKeySelective(Question record);
+
+    int updateByPrimaryKeyWithBLOBs(Question record);
+
+    int updateByPrimaryKey(Question record);
 }

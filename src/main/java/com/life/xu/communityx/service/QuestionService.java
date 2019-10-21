@@ -1,6 +1,7 @@
 package com.life.xu.communityx.service;
 
 import com.life.xu.communityx.model.Question;
+import com.life.xu.communityx.model.QuestionQuery;
 import com.life.xu.communityx.vo.PaginationVO;
 import com.life.xu.communityx.vo.QuestionVO;
 
@@ -18,7 +19,7 @@ public interface QuestionService {
 
     List<QuestionVO> list();
 
-    PaginationVO<QuestionVO> page(Map<String,Object> parMap, Integer page, Integer pageSize);
+    PaginationVO<QuestionVO> page(QuestionQuery questionQuery, Integer page, Integer pageSize);
 
     QuestionVO findById(Long id);
 }

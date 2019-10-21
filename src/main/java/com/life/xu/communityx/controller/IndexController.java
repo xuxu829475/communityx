@@ -2,6 +2,7 @@ package com.life.xu.communityx.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.life.xu.communityx.model.Question;
+import com.life.xu.communityx.model.QuestionQuery;
 import com.life.xu.communityx.model.User;
 import com.life.xu.communityx.service.QuestionService;
 import com.life.xu.communityx.service.UserService;
@@ -47,8 +48,7 @@ public class IndexController {
                 session.setAttribute("user", user);
             }
         }
-        Map<String,Object> parMap = new HashMap<>(16);
-        PaginationVO<QuestionVO> questionList = questionService.page(parMap,page,pageSize);
+        PaginationVO<QuestionVO> questionList = questionService.page(new QuestionQuery(),page,pageSize);
         model.addAttribute("questionList", questionList);
         return "index";
     }

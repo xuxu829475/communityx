@@ -39,7 +39,12 @@ mybatis:
   #    schema:
   #      - classpath:sql/department.sql
   #      - classpath:sql/employee.sql
-
+#分页
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 #显示sql
 logging:
   level:

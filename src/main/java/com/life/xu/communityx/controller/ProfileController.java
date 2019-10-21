@@ -1,6 +1,7 @@
 package com.life.xu.communityx.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.life.xu.communityx.model.QuestionQuery;
 import com.life.xu.communityx.model.User;
 import com.life.xu.communityx.service.QuestionService;
 import com.life.xu.communityx.service.UserService;
@@ -52,7 +53,10 @@ public class ProfileController {
         User user = userService.findByToken(token);
         HashMap<String, Object> parMap = new HashMap<>(16);
         parMap.put("creator", user.getId());
-        PaginationVO<QuestionVO> questionList = questionService.page(parMap,page,pageSize);
+        QuestionQuery questionQuery = new QuestionQuery();
+        QuestionQuery.Criteria questionQueryCriteria = questionQuery.createCriteria();
+        questionQueryCriteria.andCreatorEqualTo(user.getId());
+        PaginationVO<QuestionVO> questionList = questionService.page(questionQuery,page,pageSize);
         model.addAttribute("pagination",questionList);
         return "profile";
     }
