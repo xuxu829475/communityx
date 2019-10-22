@@ -2,6 +2,7 @@ package com.life.xu.communityx.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.life.xu.communityx.Converter.QuestionConverter;
 import com.life.xu.communityx.dao.QuestionDao;
 import com.life.xu.communityx.model.Question;
@@ -47,8 +48,16 @@ public class QuestionServiceImpl implements QuestionService {
             question.setGmtModified(System.currentTimeMillis());
             questionDao.insertSelective(question);
         }else {
-            question.setGmtModified(System.currentTimeMillis());
-            questionDao.updateByPrimaryKeyWithBLOBs(question);
+           // Question dbQuestion = questionDao.selectByPrimaryKey(question.getId());
+            Question updateQuestion = new Question();
+            updateQuestion.setGmtModified(System.currentTimeMillis());
+            updateQuestion.setTitle(question.getTitle());
+            updateQuestion.setDescription(question.getDescription());
+            updateQuestion.setTag(question.getTag());
+            QuestionQuery example = new QuestionQuery();
+            example.createCriteria()
+                    .andIdEqualTo(question.getId());
+            int updated = questionDao.updateByExampleSelective(updateQuestion, example);
         }
 
     }
@@ -63,12 +72,13 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public PaginationVO<QuestionVO> page(QuestionQuery questionQuery, Integer page, Integer pageSize) {
-        Page<Question> pageList = PageHelper.startPage(page, pageSize);
-        questionDao.selectByExampleWithBLOBs(questionQuery);
+        PageHelper.startPage(page, pageSize);
+        List<Question> questionList = questionDao.selectByExampleWithBLOBs(questionQuery);
+        PageInfo<Question> pageInfo = new PageInfo<>(questionList);
         PaginationVO<QuestionVO> paginationVO = new PaginationVO<>();
-        List<QuestionVO> questionVOList = questionConverter.question2QuestionVoConverter(pageList.getResult());
+        List<QuestionVO> questionVOList = questionConverter.question2QuestionVoConverter(questionList);
         paginationVO.setData(questionVOList);
-        paginationVO.setPagination((int) pageList.getTotal(),page);
+        paginationVO.setPagination((int) pageInfo.getTotal(),page,pageSize);
         return paginationVO;
     }
 
