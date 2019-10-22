@@ -28,6 +28,8 @@ public class QuestionController {
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id")Long id , Model model){
         QuestionVO question = questionService.findById(id);
+        //累加阅读数
+        questionService.incView(id);
         model.addAttribute("question", question);
         return "question";
     }

@@ -22,4 +22,6 @@ public interface QuestionService {
     PaginationVO<QuestionVO> page(QuestionQuery questionQuery, Integer page, Integer pageSize);
 
     QuestionVO findById(Long id);
+
+    void incView(Long id);
 }

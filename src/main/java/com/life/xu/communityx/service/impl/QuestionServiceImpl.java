@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.life.xu.communityx.Converter.QuestionConverter;
 import com.life.xu.communityx.dao.QuestionDao;
+import com.life.xu.communityx.dao.QuestionExtDao;
 import com.life.xu.communityx.exception.CustomizeErrorCode;
 import com.life.xu.communityx.exception.CustomizeException;
 import com.life.xu.communityx.model.Question;
@@ -29,6 +30,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     QuestionDao questionDao;
+    @Autowired
+    QuestionExtDao questionExtDao;
     @Autowired
     UserService userService;
     @Autowired
@@ -90,6 +93,14 @@ public class QuestionServiceImpl implements QuestionService {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         return questionConverter.question2QuestionVoConverter(question);
+    }
+
+    @Override
+    public void incView(Long id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtDao.incView(question);
     }
 
 
