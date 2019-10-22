@@ -1,13 +1,13 @@
 package com.life.xu.communityx.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.life.xu.communityx.Converter.QuestionConverter;
 import com.life.xu.communityx.dao.QuestionDao;
+import com.life.xu.communityx.exception.CustomizeErrorCode;
+import com.life.xu.communityx.exception.CustomizeException;
 import com.life.xu.communityx.model.Question;
 import com.life.xu.communityx.model.QuestionQuery;
-import com.life.xu.communityx.model.User;
 import com.life.xu.communityx.service.QuestionService;
 import com.life.xu.communityx.service.UserService;
 import com.life.xu.communityx.vo.PaginationVO;
@@ -16,9 +16,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @program: communityx
@@ -58,6 +56,9 @@ public class QuestionServiceImpl implements QuestionService {
             example.createCriteria()
                     .andIdEqualTo(question.getId());
             int updated = questionDao.updateByExampleSelective(updateQuestion, example);
+            if(updated == 0){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
 
     }
@@ -85,6 +86,9 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public QuestionVO findById(Long id) {
         Question question = questionDao.selectByPrimaryKey(id);
+        if (question == null) {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         return questionConverter.question2QuestionVoConverter(question);
     }
 
