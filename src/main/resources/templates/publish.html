@@ -20,18 +20,18 @@
             <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起</h2>
             <hr/>
             <form action="/publish" method="post">
-                <input type="hidden" name="id" th:value="${question.id}">
+                <input type="hidden" name="id" th:value="${question?.id}">
                 <div class="form-group">
                     <label for="title">问题标题（简单扼要）：</label>
-                    <input class="form-control" id="title" name="title" placeholder="问题标题。。" th:value="${question.title}"/>
+                    <input class="form-control" id="title" name="title" placeholder="问题标题。。" th:value="${question?.title}"/>
                 </div>
                 <div class="form-group">
                     <label for="title">问题补偿（必填，请参照右侧提示）：</label>
-                    <textarea name="description" id="description" class="form-control" cols="30" rows="10" th:text="${question.description}"></textarea>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10" th:text="${question?.description}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="title">添加标签：</label>
-                    <input class="form-control" id="tag" name="tag" placeholder="输入标签。以 ，号分隔" th:value="${question.tag}"/>
+                    <input class="form-control" id="tag" name="tag" placeholder="输入标签。以 ，号分隔" th:value="${question?.tag}"/>
                 </div>
                 <div class="container-fluid">
                     <div class="row">

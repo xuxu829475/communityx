@@ -1,0 +1,1 @@
+ALTER TABLE comment ADD like_count bigint DEFAULT 0 NULL COMMENT '点赞数';
